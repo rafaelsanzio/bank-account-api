@@ -27,41 +27,41 @@
 		$ npm run dev
 
 ## Casos de Teste :hammer:
-		# Requisição de criação
-		 POST - /accounts
-		 params: {
-			"name": "Rafael Sanzio",
-			"balance": 2500
-		 }
+	# Requisição de criação
+	 POST - /accounts
+	 params: {
+		"name": "Rafael Sanzio",
+		"balance": 2500
+	 }
 
-		# Requisições de listagens
-		GET - /accounts #Listando todas as contas
-		GET - /accounts/{id} #Retornando apenas uma conta
+	# Requisições de listagens
+	GET - /accounts #Listando todas as contas
+	GET - /accounts/{id} #Retornando apenas uma conta
 
-		# Requisição de exclusão
-		DELETE - /accounts/{id}
+	# Requisição de exclusão
+	DELETE - /accounts/{id}
 
-		# Requisição de atualização
-		PUT - /accounts/{id}
-		params: {
-			"name": "Mateus Silveira",
-			"balance": 25000
-		}
+	# Requisição de atualização
+	PUT - /accounts/{id}
+	params: {
+		"name": "Mateus Silveira",
+		"balance": 25000
+	}
 
-		# Requisição de transações (Saques e Depósitos)
-		POST - /accounts/transaction
-		params: {
-			"id": 1,
-			"value": 200 #Valor positivo para depósito e negativo para saque
-		}
+	# Requisição de transações (Saques e Depósitos)
+	POST - /accounts/transaction
+	params: {
+		"id": 1,
+		"value": 200 #Valor positivo para depósito e negativo para saque
+	}
 
-		# Requisição de transferência
-		POST - /accounts/transfer
-		params: {
-			"to": 4,
-			"from": 1,
-			"value": 5000
-		}
+	# Requisição de transferência
+	POST - /accounts/transfer
+	params: {
+		"to": 4,
+		"from": 1,
+		"value": 5000
+	}
 
 <h1 align="center">
 	<img alt="Desafio conceitos nodeJS" src="https://insomnia.rest/images/run.svg" />
