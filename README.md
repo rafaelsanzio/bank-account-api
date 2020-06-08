@@ -34,7 +34,7 @@
 			"balance": 2500
 		 }
 
-		# Requisição de listagens
+		# Requisições de listagens
 		GET - /accounts #Listando todas as contas
 		GET - /accounts/{id} #Retornando apenas uma conta
 
