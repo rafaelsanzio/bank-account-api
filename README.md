@@ -26,7 +26,7 @@
 		# Starting o backend da aplicação
 		$ npm run dev
 
-## Casos de Teste 
+## Casos de Teste :hammer:
 		# Requisição de criação
 		 POST - /accounts
 		 params: {
