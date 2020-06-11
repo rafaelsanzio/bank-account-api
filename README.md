@@ -16,23 +16,21 @@
 
 - Passo 1: executar a instalação do [NodeJS](https://nodejs.org/en/ "NodeJS")
 - Passo 2: git clone do projeto bank-account-api
- 
-		# Navegando até a pasta do projeto 
-		$ cd bank-account-api
 
+		# Navegando até a pasta do projeto
+		$ cd bank-account-api
 		# Instalando todas as depêndencias necessárias
 		$ npm install
-
 		# Starting o backend da aplicação
 		$ npm run dev
 
 ## Casos de Teste :hammer:
 	# Requisição de criação
-	 POST - /accounts
-	 params: {
-		"name": "Rafael Sanzio",
-		"balance": 2500
-	 }
+	POST - /accounts
+	params: {
+	  "name": "Rafael Sanzio",
+	  "balance": 2500
+	}
 
 	# Requisições de listagens
 	GET - /accounts #Listando todas as contas
@@ -44,23 +42,23 @@
 	# Requisição de atualização
 	PUT - /accounts/{id}
 	params: {
-		"name": "Mateus Silveira",
-		"balance": 25000
+	  "name": "Mateus Silveira",
+	  "balance": 25000
 	}
 
 	# Requisição de transações (Saques e Depósitos)
 	POST - /accounts/transaction
 	params: {
-		"id": 1,
-		"value": 200 #Valor positivo para depósito e negativo para saque
+	  "id": 1,
+	  "value": 200 #Valor positivo para depósito e negativo para saque
 	}
 
 	# Requisição de transferência
 	POST - /accounts/transfer
 	params: {
-		"to": 4,
-		"from": 1,
-		"value": 5000
+	  "to": 4,
+	  "from": 1,
+	  "value": 5000
 	}
 
 <h1 align="center">
