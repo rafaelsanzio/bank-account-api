@@ -1,1 +1,10 @@
-{"nextID":8,"accounts":[{"id":1,"name":"Mateus Rocha","balance":5100},{"id":2,"name":"Mateus Silveira","balance":21906},{"id":4,"name":"Rafael Rocha w0","balance":200},{"id":5,"name":"Rafael Rocha w0","balance":2500},{"id":7,"name":"Rafael Sanzio","balance":2500}]}
+{
+  "nextID": 8,
+  "accounts": [
+    { "id": 1, "name": "Mateus Rocha", "balance": 5100 },
+    { "id": 2, "name": "Mateus Silveira", "balance": 21906 },
+    { "id": 4, "name": "Rafael Rocha w0", "balance": 200 },
+    { "id": 5, "name": "Rafael Rocha w0", "balance": 2500 },
+    { "id": 7, "name": "Rafael Sanzio", "balance": 2500 }
+  ]
+}
