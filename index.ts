@@ -1,16 +1,17 @@
 import "reflect-metadata";
 import "express-async-errors";
+import "@shared/container";
+
 import express from "express";
 import cors from "cors";
-
-import "@shared/container";
 
 import { promises } from "fs";
 
 import logger from "./src/utils/logger";
 
-import { accountFileJson } from "./src/utils/enum";
 import { router } from "@shared/infra/http/routes";
+
+import { accountFileJson } from "./src/utils/enum";
 
 const fs = promises;
 const app = express();
@@ -25,7 +26,6 @@ app.listen(3000, async () => {
     await fs.readFile(accountFileJson, "utf-8");
   } catch (err) {
     const initalJson = {
-      nextID: 1,
       accounts: [],
     };
     fs.writeFile(accountFileJson, JSON.stringify(initalJson)).catch((err) => {
