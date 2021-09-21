@@ -1,8 +1,8 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { GetAccountController } from "@modules/accounts/useCases/getAccount/GetAccountController";
-import { ListAccountController } from "@modules/accounts/useCases/listAccounts/ListAccountController";
-import { CreateAccountController } from "@modules/accounts/useCases/createAccount/CreateAccountController";
+import { GetAccountController } from '@modules/accounts/useCases/getAccount/GetAccountController';
+import { ListAccountController } from '@modules/accounts/useCases/listAccounts/ListAccountController';
+import { CreateAccountController } from '@modules/accounts/useCases/createAccount/CreateAccountController';
 
 const accountsRouter = Router();
 
@@ -10,9 +10,9 @@ const createAccountController = new CreateAccountController();
 const getAccountController = new GetAccountController();
 const listAccountsController = new ListAccountController();
 
-accountsRouter.post("/", createAccountController.handle);
-accountsRouter.get("/", listAccountsController.handle);
-accountsRouter.get("/:id", getAccountController.handle);
+accountsRouter.post('/', createAccountController.handle);
+accountsRouter.get('/', listAccountsController.handle);
+accountsRouter.get('/:id', getAccountController.handle);
 
 /* router.get("/", async (_, response: Response) => {
   try {
