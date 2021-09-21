@@ -1,3 +1,3 @@
-const accountFileJson = "accounts.json";
+const accountFileJson = 'accounts.json';
 
 export { accountFileJson };
