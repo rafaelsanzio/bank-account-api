@@ -1,9 +1,9 @@
-import { container } from "tsyringe";
+import { container } from 'tsyringe';
 
-import IAccountRepository from "@modules/accounts/repositories/IAccountsRepository";
-import { AccountsRepository } from "@modules/accounts/infra/filejson/repositories/AccountsRepository";
+import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
+import { AccountsRepository } from '@modules/accounts/infra/filejson/repositories/AccountsRepository';
 
 container.registerSingleton<IAccountRepository>(
-  "AccountsRepository",
-  AccountsRepository
+	'AccountsRepository',
+	AccountsRepository,
 );
