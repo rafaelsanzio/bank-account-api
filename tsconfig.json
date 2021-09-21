@@ -1,28 +1,28 @@
 {
-  "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
+	"compilerOptions": {
+		"target": "es2020",
+		"module": "commonjs",
 
-    "outDir": "./dist",
-    "rootDir": "./",
+		"outDir": "./dist",
+		"rootDir": "./",
 
-    "strict": true,
-    "strictPropertyInitialization": false,
+		"strict": true,
+		"strictPropertyInitialization": false,
 
-    "baseUrl": "./src",
-    "paths": {
-      "@modules/*": ["modules/*"],
-      "@shared/*": ["shared/*"],
-      "@errors/*": ["errors/*"],
-      "@utils/*": ["utils/*"]
-    },
+		"baseUrl": "./src",
+		"paths": {
+			"@modules/*": ["modules/*"],
+			"@shared/*": ["shared/*"],
+			"@errors/*": ["errors/*"],
+			"@utils/*": ["utils/*"]
+		},
 
-    "esModuleInterop": true,
+		"esModuleInterop": true,
 
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
+	}
 }
