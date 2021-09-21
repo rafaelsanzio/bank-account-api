@@ -1,99 +1,99 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
-import logger from "@utils/logger";
-import JSONFile from "@utils/file";
-import IJSONFile from "@utils/interfaces/IJSONFile";
-import IAccountJSONFileDTO from "@utils/dtos/IAccountJSONFileDTO";
+import logger from '@utils/logger';
+import JSONFile from '@utils/file';
+import IJSONFile from '@utils/interfaces/IJSONFile';
+import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 
-import IAccountDTO from "@modules/accounts/dtos/IAccountDTO";
-import IAccountRepository from "@modules/accounts/repositories/IAccountsRepository";
+import IAccountDTO from '@modules/accounts/dtos/IAccountDTO';
+import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
-import AppError from "@shared/errors/AppError";
+import AppError from '@shared/errors/AppError';
 
-import Account from "../model/Account";
+import Account from '../model/Account';
 
 class AccountsRepository implements IAccountRepository {
-  private repository: IJSONFile;
+	private repository: IJSONFile;
 
-  constructor() {
-    this.repository = new JSONFile();
-  }
+	constructor() {
+		this.repository = new JSONFile();
+	}
 
-  async create(data: IAccountDTO): Promise<Account> {
-    const id = uuidv4();
-    const { name, number, balance } = data;
-    const account = { id, name, number, balance };
+	async create(data: IAccountDTO): Promise<Account> {
+		const id = uuidv4();
+		const { name, number, balance } = data;
+		const account = { id, name, number, balance };
 
-    await this.repository.writeJSONFile(account);
+		await this.repository.writeJSONFile(account);
 
-    return account;
-  }
+		return account;
+	}
 
-  async list(): Promise<Account[]> {
-    const accounts = this.repository.readJSONFile();
+	async list(): Promise<Account[]> {
+		const accounts = this.repository.readJSONFile();
 
-    return accounts;
-  }
+		return accounts;
+	}
 
-  async get(id: string): Promise<Account | undefined> {
-    const accounts = await this.repository.readJSONFile();
+	async get(id: string): Promise<Account | undefined> {
+		const accounts = await this.repository.readJSONFile();
 
-    const account = accounts.find((account) => account.id === id);
+		const account = accounts.find((account) => account.id === id);
 
-    return account;
-  }
+		return account;
+	}
 
-  async delete(id: string): Promise<Account | undefined> {
-    let accounts = await this.repository.readJSONFile();
+	async delete(id: string): Promise<Account | undefined> {
+		let accounts = await this.repository.readJSONFile();
 
-    const accountDeleted = accounts.find((account) => account.id === id);
-    if (!accountDeleted) {
-      logger.error(`DELETE /accounts:${id} - Not Found`);
-      throw new AppError("Account does not find");
-    }
+		const accountDeleted = accounts.find((account) => account.id === id);
+		if (!accountDeleted) {
+			logger.error(`DELETE /accounts:${id} - Not Found`);
+			throw new AppError('Account does not find');
+		}
 
-    accounts = accounts.filter((account) => account.id !== id);
+		accounts = accounts.filter((account) => account.id !== id);
 
-    const accountsToSave: IAccountJSONFileDTO[] = { ...accounts };
+		const accountsToSave: IAccountJSONFileDTO[] = { ...accounts };
 
-    await this.repository.writeJSONFile(accountsToSave);
-    logger.info(`DELETE /accounts - ${JSON.stringify(accountsToSave)}`);
+		await this.repository.writeJSONFile(accountsToSave);
+		logger.info(`DELETE /accounts - ${JSON.stringify(accountsToSave)}`);
 
-    return accountDeleted;
-  }
+		return accountDeleted;
+	}
 
-  async update(id: string, data: IAccountDTO): Promise<Account | undefined> {
-    const { name, number, balance } = data;
-    let accounts = await this.repository.readJSONFile();
+	async update(id: string, data: IAccountDTO): Promise<Account | undefined> {
+		const { name, number, balance } = data;
+		const accounts = await this.repository.readJSONFile();
 
-    const accountIndex = accounts.findIndex((account) => account.id === id);
-    if (accountIndex === -1) {
-      logger.error(`PUT /accounts:${id} - Not Found`);
-      throw new AppError("Account does not find");
-    }
+		const accountIndex = accounts.findIndex((account) => account.id === id);
+		if (accountIndex === -1) {
+			logger.error(`PUT /accounts:${id} - Not Found`);
+			throw new AppError('Account does not find');
+		}
 
-    accounts[accountIndex] = { id, name, number, balance };
+		accounts[accountIndex] = { id, name, number, balance };
 
-    this.repository.writeJSONFile(accounts);
-    logger.info(`PUT /accounts - ${JSON.stringify(accounts[accountIndex])}`);
+		this.repository.writeJSONFile(accounts);
+		logger.info(`PUT /accounts - ${JSON.stringify(accounts[accountIndex])}`);
 
-    return accounts[accountIndex];
-  }
+		return accounts[accountIndex];
+	}
 
-  async findByNumber(number: number): Promise<Account | undefined> {
-    const accounts = await this.repository.readJSONFile();
+	async findByNumber(number: number): Promise<Account | undefined> {
+		const accounts = await this.repository.readJSONFile();
 
-    const account = accounts.find((account) => account.number === number);
-    if (!account) {
-      logger.error(`GET /accounts/find-by-number:${number} - Not Found`);
-      throw new AppError("Account does not find");
-    }
+		const account = accounts.find((account) => account.number === number);
+		if (!account) {
+			logger.error(`GET /accounts/find-by-number:${number} - Not Found`);
+			throw new AppError('Account does not find');
+		}
 
-    logger.info(
-      `GET /accounts/find-by-number:${number} - ${JSON.stringify(account)}`
-    );
-    return account;
-  }
+		logger.info(
+			`GET /accounts/find-by-number:${number} - ${JSON.stringify(account)}`,
+		);
+		return account;
+	}
 }
 
 export { AccountsRepository };

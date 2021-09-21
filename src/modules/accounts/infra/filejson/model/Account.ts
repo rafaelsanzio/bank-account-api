@@ -1,6 +1,6 @@
 export default class Account {
-  id: string;
-  name: string;
-  number: number;
-  balance: number;
+	id: string;
+	name: string;
+	number: number;
+	balance: number;
 }
