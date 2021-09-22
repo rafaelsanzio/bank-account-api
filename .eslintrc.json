@@ -1,10 +1,13 @@
 {
 	"env": {
-		"browser": true,
 		"es2021": true,
+		"browser": true,
+		"node": true,
 		"jest": true
 	},
 	"extends": [
+		"airbnb-base",
+		"prettier",
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:import/errors",
@@ -19,9 +22,16 @@
 	},
 	"plugins": ["@typescript-eslint", "eslint-plugin-import-helpers", "prettier"],
 	"rules": {
+		"camelcase": "off",
 		"prettier/prettier": "error",
-		"no-console": "off",
 		"import/no-unresolved": "error",
+		"class-methods-use-this": "off",
+		"import/prefer-default-export": "off",
+		"no-shadow": "off",
+		"no-console": "off",
+		"no-useless-constructor": "off",
+		"no-empty-function": "off",
+		"lines-between-class-members": "off",
 		"import/extensions": [
 			"error",
 			"ignorePackages",
@@ -31,6 +41,28 @@
 				"ts": "never",
 				"tsx": "never"
 			}
+		],
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": ["**/*.spec.js"]
+			}
+		],
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				"selector": "interface",
+				"format": ["PascalCase"],
+				"custom": {
+					"regex": "^I[A-Z]",
+					"match": true
+				}
+			}
 		]
+	},
+	"settings": {
+		"import/resolver": {
+			"typescript": {}
+		}
 	}
 }
