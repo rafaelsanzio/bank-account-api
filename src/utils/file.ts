@@ -1,9 +1,9 @@
 import fs from 'fs';
 
 import { accountFileJson } from '@utils/enum';
+import Account from '@modules/accounts/infra/filejson/model/Account';
 import IJSONFile from './interfaces/IJSONFile';
 import IAccountJSONFileDTO from './dtos/IAccountJSONFileDTO';
-import Account from '@modules/accounts/infra/filejson/model/Account';
 
 class JSONFile implements IJSONFile {
 	async readJSONFile(): Promise<Account[]> {

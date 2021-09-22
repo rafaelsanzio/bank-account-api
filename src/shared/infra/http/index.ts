@@ -9,9 +9,8 @@ import { promises } from 'fs';
 
 import logger from '@utils/logger';
 
-import { router } from './routes';
-
 import { accountFileJson } from '@utils/enum';
+import { router } from './routes';
 
 const fs = promises;
 const app = express();
