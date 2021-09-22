@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { pathsToModuleNameMapper } = require('ts-jest/utils');
-const { compilerOptions } = require('./tsconfig.json');
+import { pathsToModuleNameMapper } from 'ts-jest/utils';
+
+import { compilerOptions } from './tsconfig.json';
 
 // eslint-disable-next-line no-undef
 module.exports = {
