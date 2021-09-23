@@ -3,132 +3,24 @@ import { Router } from 'express';
 import { GetAccountController } from '@modules/accounts/useCases/getAccount/GetAccountController';
 import { ListAccountController } from '@modules/accounts/useCases/listAccounts/ListAccountController';
 import { CreateAccountController } from '@modules/accounts/useCases/createAccount/CreateAccountController';
+import { DeleteAccountController } from '@modules/accounts/useCases/deleteAccount/DeleteAccountController';
+import { UpdateAccountController } from '@modules/accounts/useCases/updateAccount/UpdateAccountController';
 
 const accountsRouter = Router();
 
 const createAccountController = new CreateAccountController();
 const getAccountController = new GetAccountController();
 const listAccountsController = new ListAccountController();
+const deleteAccountController = new DeleteAccountController();
+const updateAccountController = new UpdateAccountController();
 
 accountsRouter.post('/', createAccountController.handle);
 accountsRouter.get('/', listAccountsController.handle);
 accountsRouter.get('/:id', getAccountController.handle);
+accountsRouter.delete('/:id', deleteAccountController.handle);
+accountsRouter.put('/:id', updateAccountController.handle);
 
-/* router.get("/", async (_, response: Response) => {
-  try {
-    let data = await fs.readFile(accountFileJson, "utf-8");
-    let result = JSON.parse(data);
-
-    delete result.nextID;
-
-    logger.info(`LIST /accounts - ${JSON.stringify(result)}`);
-    response.send(result);
-  } catch (err) {
-    logger.error(`LIST /accounts - ${err.message}`);
-    response.status(400).send({ error: err.message });
-  }
-});
-
-router.get("/:id", async (request: Request, response: Response) => {
-  try {
-    let data = await fs.readFile(accountFileJson, "utf-8");
-    let id = Number(request.param("id"));
-    let result = JSON.parse(data);
-
-    let account = result.accounts.find(
-      (account: IAccountDTO) => account.id === id
-    );
-    if (!account) {
-      logger.error(`GET /accounts:id - Not Found`);
-      response.status(400).send({ error: "Not Found" });
-      return;
-    }
-    logger.info(`GET /accounts:id - ${JSON.stringify(account)}`);
-    response.send(account);
-  } catch (err) {
-    logger.error(`GET /accounts:id - ${err.message}`);
-    response.status(400).send({ error: err.message });
-  }
-});
-
-router.delete("/:id", async (request: Request, response: Response) => {
-  try {
-    let data = await fs.readFile(accountFileJson, "utf-8");
-    let id = Number(request.param("id"));
-    let result = JSON.parse(data);
-
-    const account = result.accounts.find(
-      (account: IAccountDTO) => account.id === id
-    );
-    if (!account) {
-      logger.error(`DELETE /accounts:id - Not Found`);
-      response.status(400).send({ error: "Not Found" });
-      return;
-    }
-
-    const accounts = result.accounts.filter(
-      (account: IAccountDTO) => account.id !== id
-    );
-    if (!accounts) {
-      logger.error(`DELETE /accounts:id - Not Found`);
-      response.status(400).send({ error: "Not Found" });
-      return;
-    }
-    result.accounts = accounts;
-
-    await fs
-      .writeFile(accountFileJson, JSON.stringify(result))
-      .then(() => {
-        logger.info(`DELETE /accounts - ${JSON.stringify(account)}`);
-        response.send(account);
-      })
-      .catch((err) => {
-        logger.error(`DELETE /accounts:id - ${err.message}`);
-        response.status(400).send({ error: err.message });
-      });
-  } catch (err) {
-    logger.error(`DELETE /accounts:id - ${err.message}`);
-    response.status(400).send({ error: err.message });
-  }
-});
-
-router.put("/:id", async (request: Request, response: Response) => {
-  try {
-    let { name, balance } = request.body;
-    let data = await fs.readFile(accountFileJson, "utf-8");
-    let id = Number(request.param("id"));
-    let result = JSON.parse(data);
-
-    const oldAccount = result.accounts.findIndex(
-      (account: IAccountDTO) => account.id === id
-    );
-    if (oldAccount === -1) {
-      logger.error(`PUT /accounts:id - Not Found`);
-      response.status(400).send({ error: "Not Found" });
-      return;
-    }
-
-    result.accounts[oldAccount].name = name;
-    result.accounts[oldAccount].balance = balance;
-
-    await fs
-      .writeFile(accountFileJson, JSON.stringify(result))
-      .then(() => {
-        logger.info(
-          `PUT /accounts - ${JSON.stringify(result.accounts[oldAccount])}`
-        );
-        response.send(result.accounts[oldAccount]);
-      })
-      .catch((err) => {
-        logger.error(`PUT /accounts:id - ${err.message}`);
-        response.status(400).send({ error: err.message });
-      });
-  } catch (err) {
-    logger.error(`PUT /accounts:id - ${err.message}`);
-    response.status(400).send({ error: err.message });
-  }
-});
-
+/*
 router.post("/transaction", async (request: Request, response: Response) => {
   try {
     let { id, value } = request.body;
