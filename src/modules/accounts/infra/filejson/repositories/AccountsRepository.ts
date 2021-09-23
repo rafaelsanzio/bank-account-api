@@ -8,8 +8,6 @@ import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 import IAccountDTO from '@modules/accounts/dtos/IAccountDTO';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
-import AppError from '@shared/errors/AppError';
-
 import Account from '../model/Account';
 
 class AccountsRepository implements IAccountRepository {
@@ -48,8 +46,7 @@ class AccountsRepository implements IAccountRepository {
 
 		const accountDeleted = accounts.find((account) => account.id === id);
 		if (!accountDeleted) {
-			logger.error(`DELETE /accounts:${id} - Not Found`);
-			throw new AppError('Account does not find');
+			return undefined;
 		}
 
 		accounts = accounts.filter((account) => account.id !== id);
@@ -57,25 +54,23 @@ class AccountsRepository implements IAccountRepository {
 		const accountsToSave: IAccountJSONFileDTO[] = { ...accounts };
 
 		await this.repository.writeJSONFile(accountsToSave);
-		logger.info(`DELETE /accounts - ${JSON.stringify(accountsToSave)}`);
 
 		return accountDeleted;
 	}
 
 	async update(id: string, data: IAccountDTO): Promise<Account | undefined> {
 		const { name, number, balance } = data;
+
 		const accounts = await this.repository.readJSONFile();
 
 		const accountIndex = accounts.findIndex((account) => account.id === id);
 		if (accountIndex === -1) {
-			logger.error(`PUT /accounts:${id} - Not Found`);
-			throw new AppError('Account does not find');
+			return undefined;
 		}
 
 		accounts[accountIndex] = { id, name, number, balance };
 
 		this.repository.writeJSONFile(accounts);
-		logger.info(`PUT /accounts - ${JSON.stringify(accounts[accountIndex])}`);
 
 		return accounts[accountIndex];
 	}
@@ -84,14 +79,7 @@ class AccountsRepository implements IAccountRepository {
 		const accounts = await this.repository.readJSONFile();
 
 		const account = accounts.find((account) => account.number === number);
-		if (!account) {
-			logger.error(`GET /accounts/find-by-number:${number} - Not Found`);
-			throw new AppError('Account does not find');
-		}
 
-		logger.info(
-			`GET /accounts/find-by-number:${number} - ${JSON.stringify(account)}`,
-		);
 		return account;
 	}
 }
