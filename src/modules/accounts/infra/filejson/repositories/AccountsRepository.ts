@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import logger from '@utils/logger';
 import JSONFile from '@utils/file';
 import IJSONFile from '@utils/interfaces/IJSONFile';
 import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
@@ -8,6 +7,7 @@ import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 import IAccountDTO from '@modules/accounts/dtos/IAccountDTO';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
+import IQueryParamsAccountDTO from '@modules/accounts/dtos/IQueryParamsAccountDTO';
 import Account from '../model/Account';
 
 class AccountsRepository implements IAccountRepository {
@@ -27,8 +27,12 @@ class AccountsRepository implements IAccountRepository {
 		return account;
 	}
 
-	async list(): Promise<Account[]> {
-		const accounts = this.repository.readJSONFile();
+	async list({ name }: IQueryParamsAccountDTO): Promise<Account[]> {
+		let accounts = await this.repository.readJSONFile();
+
+		if (name) {
+			accounts = accounts.filter((account) => account.name.includes(name));
+		}
 
 		return accounts;
 	}
