@@ -6,7 +6,11 @@ import { CreateAccountController } from '@modules/accounts/useCases/createAccoun
 import { DeleteAccountController } from '@modules/accounts/useCases/deleteAccount/DeleteAccountController';
 import { UpdateAccountController } from '@modules/accounts/useCases/updateAccount/UpdateAccountController';
 
+import { AccountValidator } from '../validators/accounts.validator';
+
 const accountsRouter = Router();
+
+const accountsValidator = new AccountValidator();
 
 const createAccountController = new CreateAccountController();
 const getAccountController = new GetAccountController();
@@ -14,11 +18,23 @@ const listAccountsController = new ListAccountController();
 const deleteAccountController = new DeleteAccountController();
 const updateAccountController = new UpdateAccountController();
 
-accountsRouter.post('/', createAccountController.handle);
-accountsRouter.get('/', listAccountsController.handle);
-accountsRouter.get('/:id', getAccountController.handle);
-accountsRouter.delete('/:id', deleteAccountController.handle);
-accountsRouter.put('/:id', updateAccountController.handle);
+accountsRouter.post(
+	'/',
+	accountsValidator.post,
+	createAccountController.handle,
+);
+accountsRouter.get('/', accountsValidator.list, listAccountsController.handle);
+accountsRouter.get('/:id', accountsValidator.get, getAccountController.handle);
+accountsRouter.delete(
+	'/:id',
+	accountsValidator.delete,
+	deleteAccountController.handle,
+);
+accountsRouter.put(
+	'/:id',
+	accountsValidator.put,
+	updateAccountController.handle,
+);
 
 /*
 router.post("/transaction", async (request: Request, response: Response) => {
