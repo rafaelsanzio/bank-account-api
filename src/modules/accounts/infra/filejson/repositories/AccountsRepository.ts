@@ -2,12 +2,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 import JSONFile from '@utils/file';
 import IJSONFile from '@utils/interfaces/IJSONFile';
-import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 
 import IAccountDTO from '@modules/accounts/dtos/IAccountDTO';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
+import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 import IQueryParamsAccountDTO from '@modules/accounts/dtos/IQueryParamsAccountDTO';
+import ITransactionAccountDTO from '@modules/accounts/dtos/ITransactionAccountDTO';
+
+import { Credit, Debit } from '@modules/accounts/types/TransactionModel';
+import ITransferAccountDTO from '@modules/accounts/dtos/ITransferAccountDTO';
 import Account from '../model/Account';
 
 class AccountsRepository implements IAccountRepository {
@@ -74,7 +78,7 @@ class AccountsRepository implements IAccountRepository {
 
 		accounts[accountIndex] = { id, name, number, balance };
 
-		this.repository.writeJSONFile(accounts);
+		await this.repository.writeJSONFile(accounts);
 
 		return accounts[accountIndex];
 	}
@@ -85,6 +89,48 @@ class AccountsRepository implements IAccountRepository {
 		const account = accounts.find((account) => account.number === number);
 
 		return account;
+	}
+
+	async transaction({
+		number,
+		value,
+		type,
+	}: ITransactionAccountDTO): Promise<Account> {
+		const accounts = await this.repository.readJSONFile();
+
+		const accountIndex = accounts.findIndex(
+			(account) => account.number === number,
+		);
+
+		// eslint-disable-next-line default-case
+		switch (type) {
+			case Credit:
+				accounts[accountIndex].balance += value;
+				break;
+			case Debit:
+				accounts[accountIndex].balance -= value;
+				break;
+		}
+
+		await this.repository.writeJSONFile(accounts);
+
+		return accounts[accountIndex];
+	}
+
+	async transfer({ to, from, value }: ITransferAccountDTO): Promise<void> {
+		const accounts = await this.repository.readJSONFile();
+
+		const accountToIndex = accounts.findIndex(
+			(account) => account.number === to,
+		);
+		const accountFromIndex = accounts.findIndex(
+			(account) => account.number === from,
+		);
+
+		accounts[accountToIndex].balance -= value;
+		accounts[accountFromIndex].balance += value;
+
+		await this.repository.writeJSONFile(accounts);
 	}
 }
 
