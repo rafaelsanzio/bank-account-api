@@ -43,6 +43,24 @@ class AccountValidator {
 			},
 		});
 	}
+	transaction() {
+		celebrate({
+			[Segments.BODY]: {
+				number: Joi.number().min(6).required(),
+				value: Joi.number().required(),
+				type: Joi.string().required().allow(['credit', 'debit']),
+			},
+		});
+	}
+	transfer() {
+		celebrate({
+			[Segments.BODY]: {
+				to: Joi.number().min(6).required(),
+				from: Joi.number().min(6).required(),
+				value: Joi.number().required(),
+			},
+		});
+	}
 }
 
 export { AccountValidator };
