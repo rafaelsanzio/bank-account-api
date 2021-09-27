@@ -1,17 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import JSONFile from '@utils/file';
-import IJSONFile from '@utils/interfaces/IJSONFile';
+import IJSONFile from '@modules/accounts/dtos/IJSONFile';
 
 import IAccountDTO from '@modules/accounts/dtos/IAccountDTO';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
-import IAccountJSONFileDTO from '@utils/dtos/IAccountJSONFileDTO';
 import IQueryParamsAccountDTO from '@modules/accounts/dtos/IQueryParamsAccountDTO';
 import ITransactionAccountDTO from '@modules/accounts/dtos/ITransactionAccountDTO';
 
 import { Credit, Debit } from '@modules/accounts/types/TransactionModel';
 import ITransferAccountDTO from '@modules/accounts/dtos/ITransferAccountDTO';
+import IAccountJSONFileDTO from '@modules/accounts/dtos/IAccountJSONFileDTO';
+
+import JSONFile from '../model/file';
 import Account from '../model/Account';
 
 class AccountsRepository implements IAccountRepository {
