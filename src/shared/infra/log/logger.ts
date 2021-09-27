@@ -10,7 +10,7 @@ const logger = winston.createLogger({
 	transports: [
 		new winston.transports.Console(),
 		new winston.transports.File({
-			filename: '@shared/infra/log/bank-accounts-api.log',
+			filename: './src/shared/infra/log/bank-accounts-api.log',
 		}),
 	],
 	format: combine(label({ label: 'my-bank-api' }), timestamp(), logFormat),
