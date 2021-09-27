@@ -13,8 +13,7 @@
 		"paths": {
 			"@modules/*": ["modules/*"],
 			"@shared/*": ["shared/*"],
-			"@errors/*": ["errors/*"],
-			"@utils/*": ["utils/*"]
+			"@errors/*": ["errors/*"]
 		},
 
 		"esModuleInterop": true,
