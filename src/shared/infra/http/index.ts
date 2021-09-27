@@ -7,9 +7,9 @@ import cors from 'cors';
 
 import { promises } from 'fs';
 
-import logger from '@utils/logger';
+import logger from '@shared/infra/log/logger';
 
-import { accountFileJson } from '@utils/enum';
+import { accountFileJson } from '@shared/infra/database/json/enum';
 import { router } from './routes';
 
 const fs = promises;
