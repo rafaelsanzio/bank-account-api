@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
-import logger from '@utils/logger';
+import logger from '@shared/infra/log/logger';
 
 @injectable()
 export class DeleteAccountUseCase {

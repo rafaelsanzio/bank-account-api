@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import logger from '@utils/logger';
+import logger from '@shared/infra/log/logger';
 
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 
