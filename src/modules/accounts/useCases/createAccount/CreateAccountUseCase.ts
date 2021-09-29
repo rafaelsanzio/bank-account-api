@@ -3,6 +3,7 @@ import AppError from '@shared/errors/AppError';
 
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 import logger from '@shared/infra/log/logger';
+import Account from '@modules/accounts/infra/filejson/model/Account';
 
 interface IRequest {
 	name: string;
@@ -16,7 +17,7 @@ export class CreateAccountUseCase {
 		@inject('IAccountRepository')
 		private accountRepository: IAccountRepository,
 	) {}
-	async execute({ name, number, balance }: IRequest): Promise<void> {
+	async execute({ name, number, balance }: IRequest): Promise<Account> {
 		const accountAlreadyExists = await this.accountRepository.findByNumber(
 			number,
 		);
@@ -26,9 +27,15 @@ export class CreateAccountUseCase {
 			throw new AppError('Account already exist!');
 		}
 
-		await this.accountRepository.create({ name, number, balance });
+		const account = await this.accountRepository.create({
+			name,
+			number,
+			balance,
+		});
 		logger.info(
 			`POST /accounts - ${JSON.stringify({ name, number, balance })}`,
 		);
+
+		return account;
 	}
 }
