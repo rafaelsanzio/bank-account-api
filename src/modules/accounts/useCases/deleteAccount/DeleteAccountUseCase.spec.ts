@@ -1,22 +1,19 @@
 import { AccountsRepositoryInMemory } from '@modules/accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import AppError from '@shared/errors/AppError';
 
-import { CreateAccountUseCase } from '../createAccount/CreateAccountUseCase';
 import { DeleteAccountUseCase } from './DeleteAccountUseCase';
 
 let deleteAccountUseCase: DeleteAccountUseCase;
-let createAccountUseCase: CreateAccountUseCase;
 let accountsRepositoryInMemory: AccountsRepositoryInMemory;
 
-describe('Create Car', () => {
+describe('Delete Account', () => {
 	beforeEach(() => {
 		accountsRepositoryInMemory = new AccountsRepositoryInMemory();
 		deleteAccountUseCase = new DeleteAccountUseCase(accountsRepositoryInMemory);
-		createAccountUseCase = new CreateAccountUseCase(accountsRepositoryInMemory);
 	});
 
 	test('should be able to delete an account', async () => {
-		const account = await createAccountUseCase.execute({
+		const account = await accountsRepositoryInMemory.create({
 			name: 'Any Account',
 			number: 123456,
 			balance: 90,
