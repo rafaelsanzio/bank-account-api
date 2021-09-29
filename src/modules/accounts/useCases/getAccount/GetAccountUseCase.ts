@@ -16,7 +16,7 @@ export class GetAccountUseCase {
 		const account = await this.accountRepository.get(id);
 		if (!account) {
 			logger.error(`GET /accounts:${id} - Not Found`);
-			throw new AppError('Account does not find');
+			throw new AppError('Account does not found!');
 		}
 
 		logger.info(`GET /accounts:id - ${JSON.stringify(account)}`);
