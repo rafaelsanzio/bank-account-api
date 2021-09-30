@@ -4,4 +4,5 @@ node_modules
 
 coverage
 
-src/shared/infra/log/bank-accounts-log.log
+src/shared/infra/log/bank-accounts-api.log
+src/shared/infra/log/bank-accounts-api-test.log
