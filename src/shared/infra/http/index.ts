@@ -7,8 +7,6 @@ import cors from 'cors';
 
 import { promises } from 'fs';
 
-import logger from '@shared/infra/log/logger';
-
 import { accountFileJson } from '@shared/infra/database/json/enum';
 import { router } from './routes';
 
@@ -28,7 +26,7 @@ app.listen(3000, async () => {
 			accounts: [],
 		};
 		fs.writeFile(accountFileJson, JSON.stringify(initalJson)).catch((err) => {
-			logger.error(err);
+			console.error(err);
 		});
 	}
 	console.log('Server is running on port 3000');
