@@ -1,8 +1,10 @@
+import winston from 'winston';
 import { inject, injectable } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
-import logger from '@shared/infra/log/logger';
+
 import Account from '@modules/accounts/infra/filejson/model/Account';
 
 interface IRequest {
@@ -16,6 +18,7 @@ export class CreateAccountUseCase {
 	constructor(
 		@inject('IAccountRepository')
 		private accountRepository: IAccountRepository,
+		private log: winston.Logger,
 	) {}
 	async execute({ name, number, balance }: IRequest): Promise<Account> {
 		const accountAlreadyExists = await this.accountRepository.findByNumber(
@@ -23,7 +26,7 @@ export class CreateAccountUseCase {
 		);
 
 		if (accountAlreadyExists) {
-			logger.error(`POST /accounts - Account ${number} already exists!`);
+			this.log.error(`POST /accounts - Account ${number} already exists!`);
 			throw new AppError('Account already exist!');
 		}
 
@@ -32,7 +35,7 @@ export class CreateAccountUseCase {
 			number,
 			balance,
 		});
-		logger.info(
+		this.log.info(
 			`POST /accounts - ${JSON.stringify({ name, number, balance })}`,
 		);
 
