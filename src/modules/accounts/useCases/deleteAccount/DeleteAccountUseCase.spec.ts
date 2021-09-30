@@ -1,15 +1,27 @@
-import { AccountsRepositoryInMemory } from '@modules/accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import AppError from '@shared/errors/AppError';
+
+import { AccountsRepositoryInMemory } from '@modules/accounts/repositories/in-memory/AccountsRepositoryInMemory';
+
+import { Logger } from '@shared/infra/log/implementation/Logger';
 
 import { DeleteAccountUseCase } from './DeleteAccountUseCase';
 
 let deleteAccountUseCase: DeleteAccountUseCase;
 let accountsRepositoryInMemory: AccountsRepositoryInMemory;
+let loggerTest: Logger;
 
 describe('Delete Account', () => {
 	beforeEach(() => {
+		loggerTest = new Logger();
+		const logInMemory = loggerTest.log(
+			'./src/shared/infra/log/bank-accounts-api-test.log',
+		);
+
 		accountsRepositoryInMemory = new AccountsRepositoryInMemory();
-		deleteAccountUseCase = new DeleteAccountUseCase(accountsRepositoryInMemory);
+		deleteAccountUseCase = new DeleteAccountUseCase(
+			accountsRepositoryInMemory,
+			logInMemory,
+		);
 	});
 
 	test('should be able to delete an account', async () => {
