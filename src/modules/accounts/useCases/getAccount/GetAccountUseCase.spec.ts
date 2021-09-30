@@ -1,15 +1,27 @@
-import { AccountsRepositoryInMemory } from '@modules/accounts/repositories/in-memory/AccountsRepositoryInMemory';
 import AppError from '@shared/errors/AppError';
+
+import { AccountsRepositoryInMemory } from '@modules/accounts/repositories/in-memory/AccountsRepositoryInMemory';
+
+import { Logger } from '@shared/infra/log/implementation/Logger';
 
 import { GetAccountUseCase } from './GetAccountUseCase';
 
 let getAccountUseCase: GetAccountUseCase;
 let accountsRepositoryInMemory: AccountsRepositoryInMemory;
+let loggerTest: Logger;
 
 describe('Get Account', () => {
 	beforeEach(() => {
+		loggerTest = new Logger();
+		const logInMemory = loggerTest.log(
+			'./src/shared/infra/log/bank-accounts-api-test.log',
+		);
+
 		accountsRepositoryInMemory = new AccountsRepositoryInMemory();
-		getAccountUseCase = new GetAccountUseCase(accountsRepositoryInMemory);
+		getAccountUseCase = new GetAccountUseCase(
+			accountsRepositoryInMemory,
+			logInMemory,
+		);
 	});
 
 	it('should be able to get an account', async () => {
