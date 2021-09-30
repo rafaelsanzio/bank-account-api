@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
+import winston from 'winston';
 import { inject, injectable } from 'tsyringe';
 
-import logger from '@shared/infra/log/logger';
 import AppError from '@shared/errors/AppError';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 import ITransactionAccountDTO from '@modules/accounts/dtos/ITransactionAccountDTO';
@@ -14,6 +14,7 @@ export class TransactionAccountUseCase {
 	constructor(
 		@inject('IAccountRepository')
 		private accountRepository: IAccountRepository,
+		private log: winston.Logger,
 	) {}
 	async execute({
 		number,
@@ -23,7 +24,7 @@ export class TransactionAccountUseCase {
 		const accountExists = await this.accountRepository.findByNumber(number);
 
 		if (!accountExists) {
-			logger.error(
+			this.log.error(
 				`POST /accounts/transaction - Account ${number} does not exist!`,
 			);
 			throw new AppError('Account does not exist!');
@@ -40,7 +41,7 @@ export class TransactionAccountUseCase {
 				break;
 			case Debit:
 				if (accountExists.balance <= 0 || accountExists.balance < value) {
-					logger.error(
+					this.log.error(
 						`POST /accounts/transaction - Account ${number} with Insufficient Funds!`,
 					);
 					throw new AppError('Account with Insufficient Funds!');
@@ -53,7 +54,7 @@ export class TransactionAccountUseCase {
 		}
 
 		const account = this.accountRepository.findByNumber(number);
-		logger.info(`POST /accounts/transaction - ${JSON.stringify(account)}`);
+		this.log.info(`POST /accounts/transaction - ${JSON.stringify(account)}`);
 		return account;
 	}
 }
