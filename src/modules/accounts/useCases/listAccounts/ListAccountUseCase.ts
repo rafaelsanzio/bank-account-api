@@ -1,6 +1,5 @@
+import winston from 'winston';
 import { inject, injectable } from 'tsyringe';
-
-import logger from '@shared/infra/log/logger';
 
 import Account from '@modules/accounts/infra/filejson/model/Account';
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
@@ -11,11 +10,12 @@ export class ListAccountUseCase {
 	constructor(
 		@inject('IAccountRepository')
 		private accountRepository: IAccountRepository,
+		private log: winston.Logger,
 	) {}
 	async execute(params: IQueryParamsAccountDTO): Promise<Account[]> {
 		const accounts = await this.accountRepository.list(params);
 
-		logger.info(`LIST /accounts - ${JSON.stringify(accounts)}`);
+		this.log.info(`LIST /accounts - ${JSON.stringify(accounts)}`);
 
 		return accounts;
 	}
