@@ -6,3 +6,5 @@ coverage
 
 src/shared/infra/log/bank-accounts-api.log
 src/shared/infra/log/bank-accounts-api-test.log
+
+src/shared/infra/database/json/accounts.json
