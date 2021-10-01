@@ -56,7 +56,7 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
 	}
 
 	async update(id: string, data: IAccountDTO): Promise<Account | undefined> {
-		const { name, number, balance } = data;
+		const { name, balance } = data;
 
 		const accountIndex = this.accounts.findIndex(
 			(account) => account.id === id,
@@ -65,7 +65,12 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
 			return undefined;
 		}
 
-		this.accounts[accountIndex] = { id, name, number, balance };
+		this.accounts[accountIndex] = {
+			id,
+			name,
+			balance,
+			number: this.accounts[accountIndex].number,
+		};
 
 		return this.accounts[accountIndex];
 	}
