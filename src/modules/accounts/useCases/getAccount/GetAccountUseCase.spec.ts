@@ -24,7 +24,7 @@ describe('Get Account', () => {
 		);
 	});
 
-	it('should be able to get an account', async () => {
+	test('should be able to get an account', async () => {
 		const account = await accountsRepositoryInMemory.create({
 			name: 'Get Account',
 			number: 12345,
