@@ -103,7 +103,7 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
 		return this.accounts[accountIndex];
 	}
 
-	async transfer({ to, from, value }: ITransferAccountDTO): Promise<void> {
+	async transfer({ to, from, value }: ITransferAccountDTO): Promise<Account> {
 		const accountToIndex = this.accounts.findIndex(
 			(account) => account.number === to,
 		);
@@ -113,6 +113,8 @@ class AccountsRepositoryInMemory implements IAccountsRepository {
 
 		this.accounts[accountToIndex].balance -= value;
 		this.accounts[accountFromIndex].balance += value;
+
+		return this.accounts[accountToIndex];
 	}
 }
 

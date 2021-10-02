@@ -14,5 +14,5 @@ export default interface IAccountRepository {
 	update(id: string, data: IUpdateAccountDTO): Promise<Account | undefined>;
 	findByNumber(number: number): Promise<Account | undefined>;
 	transaction(data: ITransactionAccountDTO): Promise<Account>;
-	transfer(data: ITransferAccountDTO): Promise<void>;
+	transfer(data: ITransferAccountDTO): Promise<Account>;
 }
