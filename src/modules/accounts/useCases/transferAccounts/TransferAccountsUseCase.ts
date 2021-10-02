@@ -6,6 +6,7 @@ import AppError from '@shared/errors/AppError';
 
 import IAccountRepository from '@modules/accounts/repositories/IAccountsRepository';
 import ITransferAccountDTO from '@modules/accounts/dtos/ITransferAccountDTO';
+import Account from '@modules/accounts/infra/filejson/model/Account';
 
 @injectable()
 export class TransferAccountsUseCase {
@@ -14,14 +15,14 @@ export class TransferAccountsUseCase {
 		private accountRepository: IAccountRepository,
 		private log: winston.Logger,
 	) {}
-	async execute({ to, from, value }: ITransferAccountDTO): Promise<void> {
+	async execute({ to, from, value }: ITransferAccountDTO): Promise<Account> {
 		const accountToExists = await this.accountRepository.findByNumber(to);
 		if (!accountToExists) {
 			this.log.error(`POST /accounts/transfer - Account ${to} does not exist!`);
 			throw new AppError('Account does not exist!');
 		}
 
-		const accountFromExists = await this.accountRepository.findByNumber(to);
+		const accountFromExists = await this.accountRepository.findByNumber(from);
 		if (!accountFromExists) {
 			this.log.error(
 				`POST /accounts/transfer - Account ${from} does not exist!`,
@@ -36,9 +37,11 @@ export class TransferAccountsUseCase {
 			throw new AppError('Account with Insufficient Funds!');
 		}
 
-		await this.accountRepository.transfer({ to, from, value });
+		const account = await this.accountRepository.transfer({ to, from, value });
 		this.log.info(
 			`POST /accounts/transfer - ${JSON.stringify({ to, from, value })}`,
 		);
+
+		return account;
 	}
 }
