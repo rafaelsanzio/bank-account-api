@@ -118,7 +118,7 @@ class AccountsRepository implements IAccountRepository {
 		return accounts[accountIndex];
 	}
 
-	async transfer({ to, from, value }: ITransferAccountDTO): Promise<void> {
+	async transfer({ to, from, value }: ITransferAccountDTO): Promise<Account> {
 		const accounts = await this.repository.readJSONFile();
 
 		const accountToIndex = accounts.findIndex(
@@ -132,6 +132,8 @@ class AccountsRepository implements IAccountRepository {
 		accounts[accountFromIndex].balance += value;
 
 		await this.repository.writeJSONFile(accounts);
+
+		return accounts[accountToIndex];
 	}
 }
 
