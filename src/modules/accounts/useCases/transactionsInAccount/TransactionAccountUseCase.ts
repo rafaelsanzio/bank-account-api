@@ -51,9 +51,11 @@ export class TransactionAccountUseCase {
 					value,
 					type: Debit,
 				});
+				break;
 		}
 
 		const account = this.accountRepository.findByNumber(number);
+
 		this.log.info(`POST /accounts/transaction - ${JSON.stringify(account)}`);
 		return account;
 	}
