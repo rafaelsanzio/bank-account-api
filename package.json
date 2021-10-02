@@ -8,7 +8,8 @@
     "start": "ts-node index.ts",
     "lint": "pretty-quick --staged && lint-staged",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:staged": "yarn test --findRelatedTests"
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "author": "Rafael Sanzio",
   "license": "ISC",
