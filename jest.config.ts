@@ -8,7 +8,7 @@ import { compilerOptions } from './tsconfig.json';
 // eslint-disable-next-line no-undef
 module.exports = {
 	roots: ['<rootDir>/src'],
-	collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+	collectCoverageFrom: ['<rootDir>/src/modules/**/useCases/**/*.ts'],
 	coverageDirectory: 'coverage',
 	testEnvironment: 'node',
 	transform: {
